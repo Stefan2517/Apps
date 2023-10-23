@@ -1,3 +1,4 @@
+# acest fisier reprezinta o continuare a celui anterior
 '''
 user_prompt = "Introdu activitatile:"
 text = input(user_prompt) # ce e scris in user_prompt se salveaza in variabila text
@@ -438,5 +439,3 @@ print(a)
 # \ apare cand dau enter in cadrul continutului variabilei, ajuta cand nu poti afisa intreaga variabila
 # pe orizontala ecranului, aceasta ramanand neschimbata daca ii dau print()
 '''
-
-################
