@@ -40,6 +40,7 @@ while True:
             fereastra['todo'].update(value=values['activitati'][0])
 
         case orice.WIN_CLOSED:
+            #exit() # ne scoate din program si nu mai ruleaza nmk dupa, nici Bye nu e afisat! (experiment)
             break
-
+#print('Bye')
 fereastra.close()
