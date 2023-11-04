@@ -2,17 +2,23 @@ import Functii
 import PySimpleGUI as orice #in loc de PySimpleGUI, ,pot inlocui cu: orice!
 import time
 
-orice.theme("DarkPurple2") # le gasesti pe net temele
+#orice.theme("DarkPurple2") # le gasesti pe net temele
+orice.theme("Black")
 
 ceas = orice.Text("", key="ceas")
 label = orice.Text("Scrie o activitate:")
 input_box = orice.InputText(tooltip="Scrie activitatea", key='todo')
-add_buton = orice.Button("Adauga", size=10) #merge si fara a zice dimensiunea
+#add_buton = orice.Button("Adauga", size=10) #merge si fara a zice dimensiunea
+add_buton = orice.Button(size=10, image_source="add.png", mouseover_colors="LightBlue2", #cand pui mouse-ul pe buton
+                         tooltip="Adauga activitatea", key="Adauga") #tooltip e un mesaj pt utilizator
+
 list_box = orice.Listbox(values=Functii.get_activitati(), key="activitati",
                          enable_events=True, size=[45, 10]) #45 reprezinta 45 de caractere pe o linie, si sunt 10 linii afisate
 #go to Implementation pe ListBox si pot personaliza de acolo
 edit_button = orice.Button("Editeaza")
-complete_button = orice.Button("Finalizate")
+complete_button = orice.Button(size=10, image_source="complete.png", mouseover_colors="LightBlue2",
+                         tooltip="Activitate finalizata", key="Finalizate")
+
 exit_button = orice.Button("Iesire")
 
 fereastra = orice.Window("Lista mea de activitati",
