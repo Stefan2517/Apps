@@ -1,27 +1,35 @@
 import Functii
 import PySimpleGUI as orice #in loc de PySimpleGUI, ,pot inlocui cu: orice!
+import time
 
+orice.theme("DarkPurple2") # le gasesti pe net temele
+
+ceas = orice.Text("", key="ceas")
 label = orice.Text("Scrie o activitate:")
 input_box = orice.InputText(tooltip="Scrie activitatea", key='todo')
-add_buton = orice.Button("Adauga")
+add_buton = orice.Button("Adauga", size=10) #merge si fara a zice dimensiunea
 list_box = orice.Listbox(values=Functii.get_activitati(), key="activitati",
-                         enable_events=True, size=[45, 10])
+                         enable_events=True, size=[45, 10]) #45 reprezinta 45 de caractere pe o linie, si sunt 10 linii afisate
+#go to Implementation pe ListBox si pot personaliza de acolo
 edit_button = orice.Button("Editeaza")
 complete_button = orice.Button("Finalizate")
 exit_button = orice.Button("Iesire")
 
 fereastra = orice.Window("Lista mea de activitati",
-                         layout=[[label], [input_box, add_buton],
+                         layout=[[ceas],
+                                 [label],
+                                 [input_box, add_buton],
                                  [list_box, edit_button, complete_button],
                                  [exit_button]],
                          font=('Helvetica', 15)) #layout este un argument si asteapta o lista
 #layout=[[label, input_box]]) le pune pe o singura linie
 
 while True:
-    event, values = fereastra.read()
-    print(1, event)
-    print(2, values)
-    print(3, values['activitati'])
+    event, values = fereastra.read(timeout=200) # se repeta la fiecare 200 milisecunde
+    fereastra["ceas"].update(value=time.strftime('%d - %b - %Y, %H:%M:%S'))
+#    print(1, event)
+#    print(2, values)
+#    print(3, values['activitati'])
     match event:
         case "Adauga":
             todos = Functii.get_activitati()
@@ -31,22 +39,28 @@ while True:
             fereastra["activitati"].update(values=todos)
 
         case "Editeaza":
-            todo_to_edit = values["activitati"][0]
-            new_todo = values['todo']
+            try:
+                todo_to_edit = values["activitati"][0]
+                new_todo = values['todo']
 
-            activitati = Functii.get_activitati()
-            index = activitati.index(todo_to_edit)
-            activitati[index] = new_todo
-            Functii.write_activitati(activitati)
-            fereastra["activitati"].update(values=activitati) # sa se schimbe in timp real ce am editat in fereastra utilizatorului
+                activitati = Functii.get_activitati()
+                index = activitati.index(todo_to_edit)
+                activitati[index] = new_todo
+                Functii.write_activitati(activitati)
+                fereastra["activitati"].update(values=activitati) # sa se schimbe in timp real ce am editat in fereastra utilizatorului
+            except IndexError:
+                orice.popup("Te rog întâi selectează o activitate!", font=("Helvetica", 15))
 
         case "Finalizate":
-            todo_to_complete = values["activitati"][0]
-            activitati= Functii.get_activitati()
-            activitati.remove(todo_to_complete)
-            Functii.write_activitati(activitati)
-            fereastra["activitati"].update(values=activitati)
-            fereastra["todo"].update(value="") # empty string sa nu apara nmk in ,,bara"
+            try:
+                todo_to_complete = values["activitati"][0]
+                activitati= Functii.get_activitati()
+                activitati.remove(todo_to_complete)
+                Functii.write_activitati(activitati)
+                fereastra["activitati"].update(values=activitati)
+                fereastra["todo"].update(value="") # empty string sa nu apara nmk in ,,bara"
+            except IndexError:
+                orice.popup("Te rog întâi selectează o activitate!", font=("Helvetica", 15))
 
         case "Iesire":
             break
