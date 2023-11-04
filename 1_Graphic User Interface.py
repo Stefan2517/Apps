@@ -7,10 +7,13 @@ add_buton = orice.Button("Adauga")
 list_box = orice.Listbox(values=Functii.get_activitati(), key="activitati",
                          enable_events=True, size=[45, 10])
 edit_button = orice.Button("Editeaza")
-
+complete_button = orice.Button("Finalizate")
+exit_button = orice.Button("Iesire")
 
 fereastra = orice.Window("Lista mea de activitati",
-                         layout=[[label], [input_box, add_buton], [list_box, edit_button]],
+                         layout=[[label], [input_box, add_buton],
+                                 [list_box, edit_button, complete_button],
+                                 [exit_button]],
                          font=('Helvetica', 15)) #layout este un argument si asteapta o lista
 #layout=[[label, input_box]]) le pune pe o singura linie
 
@@ -36,6 +39,18 @@ while True:
             activitati[index] = new_todo
             Functii.write_activitati(activitati)
             fereastra["activitati"].update(values=activitati) # sa se schimbe in timp real ce am editat in fereastra utilizatorului
+
+        case "Finalizate":
+            todo_to_complete = values["activitati"][0]
+            activitati= Functii.get_activitati()
+            activitati.remove(todo_to_complete)
+            Functii.write_activitati(activitati)
+            fereastra["activitati"].update(values=activitati)
+            fereastra["todo"].update(value="") # empty string sa nu apara nmk in ,,bara"
+
+        case "Iesire":
+            break
+
         case 'activitati':  # sa apara ce am selectat in casuta de editat
             fereastra['todo'].update(value=values['activitati'][0])
 
