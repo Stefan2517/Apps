@@ -1,6 +1,12 @@
 import Functii
 import PySimpleGUI as orice #in loc de PySimpleGUI, ,pot inlocui cu: orice!
 import time
+import os
+
+#pt a putea face exe din acest program si sa ne asiguram ca va exista Activitati.txt, altfel e un bug!
+if not os.path.exists("Activitati.txt"):
+    with open("Activitati.txt", "w") as file:
+        pass
 
 #orice.theme("DarkPurple2") # le gasesti pe net temele
 orice.theme("Black")
