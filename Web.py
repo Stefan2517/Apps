@@ -13,10 +13,19 @@ st.title("My ToDo App")
 st.subheader("This is my todo app.")
 st.write("This app is to increase your productivity.")
 
-for todo in todos:
-    st.checkbox(todo)
+for index, todo in enumerate(todos):
+    checkbox = st.checkbox(todo, key=todo)
+    if checkbox:
+        todos.pop(index)
+        Functii.write_activitati(todos)
+        del st.session_state[todo]
+        st.experimental_rerun()
+
 
 #la label daca scriam cv aparea deasupra casutei
 st.text_input(label="", label_visibility="hidden", placeholder="Scrie o activitate...",
               on_change=add_activitate, key="new_todo")
 
+#print("Hello")
+
+#st.session_state #ne zice daca e false sau true activitatiile afisate. True e daca casuta e bifata pt activitate!
