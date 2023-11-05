@@ -28,4 +28,4 @@ st.text_input(label="", label_visibility="hidden", placeholder="Scrie o activita
 
 #print("Hello")
 
-#st.session_state #ne zice daca e false sau true activitatiile afisate. True e daca casuta e bifata pt activitate!
+#st.session_state #ne zice daca e false sau true activitatile afisate. True e daca casuta e bifata pt activitate!
